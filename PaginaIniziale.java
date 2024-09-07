@@ -13,6 +13,8 @@ public class PaginaIniziale {
     private static DefaultTableModel dipendentiTableModel;
 
     public static void main(String[] args) {
+    	dipendentiTableModel = new DefaultTableModel(new Object[]{"Dipendente", "Ruolo"}, 0);
+    	
         JFrame startFrame = new JFrame("ORGANIGRAMMA AZIENDALE");
         startFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         startFrame.setSize(400, 200);

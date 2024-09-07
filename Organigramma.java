@@ -116,42 +116,55 @@ public class Organigramma implements Serializable {
                                          .map(UnitaOrganizzativa::getNome)
                                          .toArray(String[]::new);
 
-        String unitaSelezionata = (String) JOptionPane.showInputDialog(
-            null,
-            "Seleziona l'unità per il dipendente:",
-            "Selezione Unità",
-            JOptionPane.PLAIN_MESSAGE,
-            null,
-            nomiUnita,
-            nomiUnita[0]
-        );
-        if (unitaSelezionata == null) {
-            return;
-        }
-        UnitaOrganizzativa unitaSelezionataObj = tutteLeUnita.stream()
-                                                             .filter(unita -> unita.getNome().equals(unitaSelezionata))
-                                                             .findFirst()
-                                                             .orElse(null);
-
-        if (unitaSelezionataObj != null) {
-            String ruolo = JOptionPane.showInputDialog("Inserisci il ruolo del dipendente: ");
-            String nome = JOptionPane.showInputDialog("Inserisci il nome del dipendente: ");
-            String cognome = JOptionPane.showInputDialog("Inserisci il cognome del dipendente: ");
-
-            if (ruolo != null && nome != null && cognome != null) {
-                Dipendente nuovoDipendente = new Dipendente(nome, cognome, ruolo, unitaSelezionataObj.getLivelloAccesso());
-                dipendentiTableModel.addRow(new Object[]{nome + " " + cognome, ruolo});
-                unitaSelezionataObj.aggiungiDipendente(nuovoDipendente);
-                organigrammaPanel.revalidate();
-                organigrammaPanel.repaint();
-            } else {
-                JOptionPane.showMessageDialog(null, "I dati del dipendente non possono essere vuoti.");
+        boolean aggiungiAltroRuolo = true;
+        while (aggiungiAltroRuolo) {
+            String unitaSelezionata = (String) JOptionPane.showInputDialog(
+                null,
+                "Seleziona l'unità per il dipendente:",
+                "Selezione Unità",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                nomiUnita,
+                nomiUnita[0]
+            );
+            if (unitaSelezionata == null) {
+                return;
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Unità selezionata non trovata.");
+            UnitaOrganizzativa unitaSelezionataObj = tutteLeUnita.stream()
+                                                                 .filter(unita -> unita.getNome().equals(unitaSelezionata))
+                                                                 .findFirst()
+                                                                 .orElse(null);
+
+            if (unitaSelezionataObj != null) {
+                String ruolo = JOptionPane.showInputDialog("Inserisci il ruolo del dipendente: ");
+                String nome = JOptionPane.showInputDialog("Inserisci il nome del dipendente: ");
+                String cognome = JOptionPane.showInputDialog("Inserisci il cognome del dipendente: ");
+
+                if (ruolo != null && nome != null && cognome != null) {
+                    Dipendente nuovoDipendente = new Dipendente(nome, cognome, ruolo, unitaSelezionataObj.getLivelloAccesso());
+                    dipendentiTableModel.addRow(new Object[]{nome + " " + cognome, ruolo});
+                    unitaSelezionataObj.aggiungiDipendente(nuovoDipendente);
+                    organigrammaPanel.revalidate();
+                    organigrammaPanel.repaint();
+                } else {
+                    JOptionPane.showMessageDialog(null, "I dati del dipendente non possono essere vuoti.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Unità selezionata non trovata.");
+            }
+
+            int risposta = JOptionPane.showConfirmDialog(
+                null,
+                "Il dipendente ha un altro ruolo in un'altra unità?",
+                "Aggiungi altro ruolo",
+                JOptionPane.YES_NO_OPTION
+            );
+
+            if (risposta != JOptionPane.YES_OPTION) {
+                aggiungiAltroRuolo = false;
+            }
         }
     }
-
 
     private void rimuoviDipendente(UnitaOrganizzativa nodo, OrganigrammaPanel organigrammaPanel) {
         List<Dipendente> tuttiDipendenti = getAllDipendenti(nodo);
