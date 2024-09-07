@@ -116,8 +116,20 @@ public class Organigramma implements Serializable {
                                          .map(UnitaOrganizzativa::getNome)
                                          .toArray(String[]::new);
 
+        String nome = null;
+        String cognome = null;
         boolean aggiungiAltroRuolo = true;
+
         while (aggiungiAltroRuolo) {
+            if (nome == null && cognome == null) {
+                nome = JOptionPane.showInputDialog("Inserisci il nome del dipendente: ");
+                cognome = JOptionPane.showInputDialog("Inserisci il cognome del dipendente: ");
+                if (nome == null || cognome == null) {
+                    JOptionPane.showMessageDialog(null, "Nome e cognome non possono essere vuoti.");
+                    return;
+                }
+            }
+
             String unitaSelezionata = (String) JOptionPane.showInputDialog(
                 null,
                 "Seleziona l'unità per il dipendente:",
@@ -137,17 +149,14 @@ public class Organigramma implements Serializable {
 
             if (unitaSelezionataObj != null) {
                 String ruolo = JOptionPane.showInputDialog("Inserisci il ruolo del dipendente: ");
-                String nome = JOptionPane.showInputDialog("Inserisci il nome del dipendente: ");
-                String cognome = JOptionPane.showInputDialog("Inserisci il cognome del dipendente: ");
-
-                if (ruolo != null && nome != null && cognome != null) {
+                if (ruolo != null) {
                     Dipendente nuovoDipendente = new Dipendente(nome, cognome, ruolo, unitaSelezionataObj.getLivelloAccesso());
                     dipendentiTableModel.addRow(new Object[]{nome + " " + cognome, ruolo});
                     unitaSelezionataObj.aggiungiDipendente(nuovoDipendente);
                     organigrammaPanel.revalidate();
                     organigrammaPanel.repaint();
                 } else {
-                    JOptionPane.showMessageDialog(null, "I dati del dipendente non possono essere vuoti.");
+                    JOptionPane.showMessageDialog(null, "Il ruolo del dipendente non può essere vuoto.");
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Unità selezionata non trovata.");
@@ -165,6 +174,7 @@ public class Organigramma implements Serializable {
             }
         }
     }
+
 
     private void rimuoviDipendente(UnitaOrganizzativa nodo, OrganigrammaPanel organigrammaPanel) {
         List<Dipendente> tuttiDipendenti = getAllDipendenti(nodo);
