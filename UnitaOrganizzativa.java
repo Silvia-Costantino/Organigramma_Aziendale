@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UnitaOrganizzativa implements Serializable {
+public class UnitaOrganizzativa implements UnitaOrganizzativaInterface, Serializable {
     private static final long serialVersionUID = 1L;
     private String nome;
     private List<UnitaOrganizzativa> sottoUnità;
@@ -87,11 +87,13 @@ public class UnitaOrganizzativa implements Serializable {
                 throw new IllegalArgumentException("Livello di accesso non definito per la profondità: " + livello);
         }
     }
-    public Rectangle getBounds() {
+    @SuppressWarnings("exports")
+	public Rectangle getBounds() {
         return bounds;
     }
 
-    public void setBounds(Rectangle bounds) {
+    @SuppressWarnings("exports")
+	public void setBounds(Rectangle bounds) {
         this.bounds = bounds;
     }
 }

@@ -6,15 +6,22 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
-import java.util.*;
+import java.util.Stack;
 
 public class PaginaIniziale {
 
     private static DefaultTableModel dipendentiTableModel;
+    private Command createOrganigrammaCommand;
+    private Command loadOrganigrammaCommand;
 
     public static void main(String[] args) {
-    	dipendentiTableModel = new DefaultTableModel(new Object[]{"Dipendente", "Ruolo"}, 0);
-    	
+        PaginaIniziale pagina = new PaginaIniziale();
+        pagina.initialize();
+    }
+
+    private void initialize() {
+        dipendentiTableModel = new DefaultTableModel(new Object[]{"Dipendente", "Ruolo"}, 0);
+
         JFrame startFrame = new JFrame("ORGANIGRAMMA AZIENDALE");
         startFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         startFrame.setSize(400, 200);
@@ -32,11 +39,14 @@ public class PaginaIniziale {
         startFrame.add(buttonPanel, BorderLayout.CENTER);
         startFrame.setVisible(true);
 
+        createOrganigrammaCommand = new CreateOrganigrammaCommand(this);
+        loadOrganigrammaCommand = new LoadOrganigrammaCommand(this, null);
+
         nuovoOrg.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 startFrame.dispose();
-                creaNuovoOrganigramma();
+                createOrganigrammaCommand.execute();
             }
         });
 
@@ -47,14 +57,15 @@ public class PaginaIniziale {
                 int returnValue = fileChooser.showOpenDialog(null);
                 if (returnValue == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();
+                    loadOrganigrammaCommand = new LoadOrganigrammaCommand(PaginaIniziale.this, selectedFile);
                     startFrame.dispose();
-                    caricaOrganigramma(selectedFile);
+                    loadOrganigrammaCommand.execute();
                 }
             }
         });
     }
 
-    private static void creaNuovoOrganigramma() {
+    public void creaNuovoOrganigramma() {
         String nomeAzienda = JOptionPane.showInputDialog("Inserisci il nome dell'azienda: ");
         if (nomeAzienda == null || nomeAzienda.trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Il nome dell'azienda non può essere vuoto.");
@@ -68,9 +79,8 @@ public class PaginaIniziale {
         }
 
         UnitaOrganizzativa radice = new UnitaOrganizzativa(nomeUnitaPrincipale);
-        Organigramma organigramma = new Organigramma(radice,dipendentiTableModel);
+        Organigramma organigramma = new Organigramma(radice, dipendentiTableModel);
         organigramma.creaEvisualizzaOrganigramma(radice, nomeAzienda);
-
     }
 
     public static void caricaOrganigramma(File file) {
@@ -153,7 +163,6 @@ public class PaginaIniziale {
             System.out.println("Errore: root o nome azienda non valido.");
         }
     }
-
 
     // Metodo di supporto per contare le tabulazioni che rappresentano l'indentazione
     private static int countLeadingTabs(String line) {

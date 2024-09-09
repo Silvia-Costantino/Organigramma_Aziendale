@@ -14,7 +14,8 @@ public class Organigramma implements Serializable {
 	@SuppressWarnings("unused")
 	private UnitaOrganizzativa radice;
 
-    public Organigramma(UnitaOrganizzativa radice,DefaultTableModel dipendentiTableModel ) {
+    @SuppressWarnings("exports")
+	public Organigramma(UnitaOrganizzativa radice,DefaultTableModel dipendentiTableModel ) {
         this.radice = radice;
         this.dipendentiTableModel = dipendentiTableModel;
     }

@@ -6,6 +6,7 @@ import org.junit.Test;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
 import java.io.*;
+import java.awt.*;
 import java.nio.file.Files;
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -109,6 +110,85 @@ public class TestClass {
     	System.out.println("Tempo di caricamento: " + duration + " ms");
     	assertTrue(duration <= TIME_LIMIT_MS, "Il caricamento dell'organigramma "
     			+ "ha superato il tempo limite di " + TIME_LIMIT_MS + " ms");
+    }
+    
+    @Test
+    public void testLeggiDecorator() {
+        UnitaOrganizzativa baseUnità = new UnitaOrganizzativa("Unità Base");
+        UnitaOrganizzativaInterface decorata = new LeggiUnitaOrganizzativaDecorator(baseUnità);
+
+        Dipendente dipendente = new Dipendente("Mario", "Rossi", "Manager", LivelloAccesso.PRIMO_LIVELLO);
+        decorata.aggiungiDipendente(dipendente);
+        
+        // Verifica che il dipendente sia stato aggiunto
+        assertTrue(decorata.getDipendenti().contains(dipendente));
+    }
+    
+    private DipendenteInterface dipendenteReale;
+    private DipendenteInterface dipendenteProxy;
+
+    @Before
+    public void setUp3() {
+        // Crea un oggetto Dipendente reale
+        dipendenteReale = new Dipendente("Mario", "Rossi", "Manager", LivelloAccesso.PRIMO_LIVELLO);
+        // Crea il proxy per l'oggetto Dipendente
+        dipendenteProxy = new DipendenteProxy(dipendenteReale);
+    }
+
+    @Test
+    public void testGetNome() {
+        assertEquals("Mario", dipendenteProxy.getNome());
+    }
+
+    @Test
+    public void testSetNome() {
+        dipendenteProxy.setNome("Luigi");
+        assertEquals("Luigi", dipendenteReale.getNome());
+    }
+
+    @Test
+    public void testGetCognome() {
+        assertEquals("Rossi", dipendenteProxy.getCognome());
+    }
+
+    @Test
+    public void testSetCognome() {
+        dipendenteProxy.setCognome("Verdi");
+        assertEquals("Verdi", dipendenteReale.getCognome());
+    }
+
+    @Test
+    public void testGetRuolo() {
+        assertEquals("Manager", dipendenteProxy.getRuolo());
+    }
+
+    @Test
+    public void testSetRuolo() {
+        dipendenteProxy.setRuolo("Team Leader");
+        assertEquals("Team Leader", dipendenteReale.getRuolo());
+    }
+
+    @Test
+    public void testGetLivelloAccesso() {
+        assertEquals(LivelloAccesso.PRIMO_LIVELLO, dipendenteProxy.getLivelloAccesso());
+    }
+
+    @Test
+    public void testSetLivelloAccesso() {
+        dipendenteProxy.setLivelloAccesso(LivelloAccesso.SECONDO_LIVELLO);
+        assertEquals(LivelloAccesso.SECONDO_LIVELLO, dipendenteReale.getLivelloAccesso());
+    }
+
+    @Test
+    public void testGetBounds() {
+        assertNotNull(dipendenteProxy.getBounds());
+    }
+
+    @Test
+    public void testSetBounds() {
+        Rectangle newBounds = new Rectangle(10, 10, 100, 100);
+        dipendenteProxy.setBounds(newBounds);
+        assertEquals(newBounds, dipendenteReale.getBounds());
     }
 
 }
