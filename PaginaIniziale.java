@@ -73,7 +73,7 @@ public class PaginaIniziale {
 
     }
 
-    private static void caricaOrganigramma(File file) {
+    public static void caricaOrganigramma(File file) {
         String nomeAzienda = "";
         UnitaOrganizzativa root = null;
         Stack<UnitaOrganizzativa> stack = new Stack<>();

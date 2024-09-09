@@ -24,6 +24,7 @@ public class Organigramma implements Serializable {
             superiore.getSottoUnità().add(nodo);
         }
     }
+    
 
     public void creaEvisualizzaOrganigramma(UnitaOrganizzativa nodo, String nomeAzienda) {
         JFrame frame = new JFrame("Organigramma Aziendale");
@@ -110,7 +111,7 @@ public class Organigramma implements Serializable {
         }
     }
 
-    private void aggiungiDipendente(UnitaOrganizzativa nodo, OrganigrammaPanel organigrammaPanel) {
+    public void aggiungiDipendente(UnitaOrganizzativa nodo, OrganigrammaPanel organigrammaPanel) {
         List<UnitaOrganizzativa> tutteLeUnita = getAllSubUnita(nodo);
         String[] nomiUnita = tutteLeUnita.stream()
                                          .map(UnitaOrganizzativa::getNome)
@@ -176,7 +177,7 @@ public class Organigramma implements Serializable {
     }
 
 
-    private void rimuoviDipendente(UnitaOrganizzativa nodo, OrganigrammaPanel organigrammaPanel) {
+    public void rimuoviDipendente(UnitaOrganizzativa nodo, OrganigrammaPanel organigrammaPanel) {
         List<Dipendente> tuttiDipendenti = getAllDipendenti(nodo);
 
         if (tuttiDipendenti.isEmpty()) {
@@ -236,7 +237,7 @@ public class Organigramma implements Serializable {
         }
     }
 
-    private void rimuoviUnitaOrganizzativa(UnitaOrganizzativa nodo, OrganigrammaPanel organigrammaPanel) {
+    public void rimuoviUnitaOrganizzativa(UnitaOrganizzativa nodo, OrganigrammaPanel organigrammaPanel) {
         List<UnitaOrganizzativa> tutteLeUnita = getAllSubUnita(nodo);
 
         if (tutteLeUnita.isEmpty()) {
@@ -294,7 +295,7 @@ public class Organigramma implements Serializable {
         }
     }
 
-    private List<Dipendente> getAllDipendenti(UnitaOrganizzativa root) {
+    public List<Dipendente> getAllDipendenti(UnitaOrganizzativa root) {
         List<Dipendente> allDipendenti = new ArrayList<>();
         collectDipendenti(root, allDipendenti);
         return allDipendenti;
@@ -339,4 +340,8 @@ public class Organigramma implements Serializable {
             collectSubUnita(subUnita, allSubUnita);
         }
     }
+
+	public UnitaOrganizzativa getUnitaOrganizzativa(UnitaOrganizzativa figlio) {
+		return figlio;
+	}
 }
