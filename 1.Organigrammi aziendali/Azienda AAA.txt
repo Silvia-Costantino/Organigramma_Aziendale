@@ -1,0 +1,14 @@
+Organigramma Azienda: Azienda AAA
+
+- Direzione Generale
+* CEO: Mario Rossi
+* CTO: Laura Bianchi
+	- Dipartimento IT
+	* Developer: Andrea Verdi
+ 	* DevOps: Marco Gialli
+ 		- Dipartimento HR
+ 		* HR Manager: Elisa Neri
+	- Dipartimento Finanza
+	* CFO: Giovanni Blu
+
+

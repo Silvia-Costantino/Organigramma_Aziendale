@@ -1,0 +1,16 @@
+Organigramma Azienda: Azienda B
+
+- Direzione Prioritaria
+	- Generale
+	* Generale: Marco Carta
+		- Amministrativa
+		* Amministratore: Tiberio Evoli
+	- Dipartimento Finanza
+	* CFO: Giovanni Bianchi
+		- Dipartimento IT
+		* Developer: Andrea Verdi
+		- Dipartimento TI
+		* Sviluppatore: Giovanni Maio
+	- Amministrazione
+	* Amministratore: Luca Galli
+

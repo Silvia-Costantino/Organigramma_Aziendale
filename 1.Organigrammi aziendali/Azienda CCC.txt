@@ -1,0 +1,7 @@
+Organigramma Azienda: Azienda CCC
+
+- Generale
+	* Capo Team: Luca Giallo
+	- Amministrazione
+		* Amministratore: Luca Giallo
+	- Direzione

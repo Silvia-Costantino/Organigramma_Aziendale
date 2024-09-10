@@ -1,0 +1,23 @@
+Organigramma Azienda: SC Company
+
+- Consiglio di Amministrazione
+	* Direttore: Mario Rossi
+	* Direttore: Silvia Costantino
+	* Consigliere: Nicola Zema
+	- Comitato Tecnico
+		* Tecnico: Giulia Neri
+		- Ricerca e Sviluppo
+			* Ricercatore: Lia Errigo
+			* Sviluppatore: Vincenzo Costantino
+	- Area Acquisti
+		* Capo Acquisti: Giulia Neri
+		- Direzione IT
+			* Consulente: Letizia Blu
+	- Area Produzione
+		* Produttore: Anna Verdi
+	- Area Vendite
+		* Addetto Vendite: Luca Bianchi
+		- Marketing
+			* Addetto Marketing: Mario Rossi
+		- Customer Care
+			* Customer Care: Bruno Gialli
