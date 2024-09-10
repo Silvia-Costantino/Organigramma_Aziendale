@@ -1,5 +1,4 @@
-Organigramma Aziendale
-Il seguente progetto consiste in un'applicazione Java per la gestione e visualizzazione di organigrammi aziendali: consente di caricare, creare, modificare o salvare organigrammi in modo semplice ed intuitivo.
+Il seguente progetto consiste in un'applicazione Java per la gestione e visualizzazione di Organigrammi Aziendali: consente di caricare, creare, modificare o salvare organigrammi in modo semplice ed intuitivo.
 
 Installazione e avvio:
 1.  Clonare il repository: "git clone https://github.com/Silvia-Costantino/Organigramma_Aziendale";
